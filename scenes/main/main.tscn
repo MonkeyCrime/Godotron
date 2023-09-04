@@ -122,7 +122,7 @@ offset_left = 8.0
 offset_top = 11.0
 offset_right = 223.0
 offset_bottom = 50.0
-theme_override_colors/font_color = Color(0.308446, 0.307335, 0.997262, 1)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_rf7cv")
 theme_override_font_sizes/font_size = 36
 text = "0"
@@ -144,7 +144,7 @@ offset_bottom = 720.0
 color = Color(0, 0, 0, 1)
 
 [node name="Panel" type="Panel" parent="Game"]
-modulate = Color(0.0174426, 0.110424, 1, 1)
+modulate = Color(1, 0, 0, 1)
 custom_minimum_size = Vector2(1280, 660)
 offset_top = 60.0
 offset_right = 1280.0

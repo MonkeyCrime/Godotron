@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://82okgpwhfmcq"]
+[gd_scene load_steps=26 format=3 uid="uid://82okgpwhfmcq"]
 
 [ext_resource type="FontFile" uid="uid://qymxbuymyue7" path="res://fonts/Computerfont.ttf" id="1_4mciy"]
 [ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_ktqko"]
@@ -12,8 +12,51 @@
 [ext_resource type="Texture2D" uid="uid://nkrhveb3v8lh" path="res://art/family_menu.png" id="10_vrexd"]
 [ext_resource type="Texture2D" uid="uid://dajiqblrtmtiv" path="res://art/electrodes_ui.png" id="11_apwqd"]
 
+[sub_resource type="Animation" id="Animation_o0ryv"]
+resource_name = "panel_cycle"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 0, 1), Color(1, 1, 1, 1), Color(0, 1, 1, 1), Color(1, 1, 1, 1), Color(0, 1, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 1, 1), Color(1, 1, 1, 1), Color(0, 0, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8owuy"]
+_data = {
+"panel_cycle": SubResource("Animation_o0ryv")
+}
+
+[sub_resource type="Theme" id="Theme_twuyd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l2s46"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 16
+border_width_top = 16
+border_width_right = 16
+border_width_bottom = 16
+corner_detail = 16
+
 [sub_resource type="Theme" id="Theme_jww4v"]
 default_font = ExtResource("1_4mciy")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ixm1"]
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.501961, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="InputEventKey" id="InputEventKey_smqu5"]
 device = -1
@@ -22,6 +65,18 @@ unicode = 115
 
 [sub_resource type="Shortcut" id="Shortcut_1xic6"]
 events = [SubResource("InputEventKey_smqu5")]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pxc6e"]
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 0.0784314)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.501961, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="InputEventKey" id="InputEventKey_61j0s"]
 device = -1
@@ -82,6 +137,24 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_ud028")
 
+[node name="PanelAnimator" type="AnimationPlayer" parent="."]
+autoplay = "panel_cycle"
+libraries = {
+"": SubResource("AnimationLibrary_8owuy")
+}
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(0.718667, 1, 0.718667, 1)
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_twuyd")
+theme_override_styles/panel = SubResource("StyleBoxFlat_l2s46")
+
 [node name="Logo" type="TextureRect" parent="."]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 1
@@ -89,8 +162,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -224.5
+offset_top = 20.0
 offset_right = 224.5
-offset_bottom = 193.0
+offset_bottom = 213.0
 grow_horizontal = 2
 texture = ExtResource("2_yisxw")
 
@@ -113,6 +187,7 @@ theme = SubResource("Theme_jww4v")
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_4ixm1")
 shortcut = SubResource("Shortcut_1xic6")
 text = "Start"
 
@@ -120,6 +195,7 @@ text = "Start"
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_pxc6e")
 shortcut = SubResource("Shortcut_xpsvq")
 text = "Exit"
 
@@ -151,35 +227,35 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_4mciy")
 theme_override_font_sizes/font_size = 24
 text = "Player
-You are the last hope of mankind"
+You are the last hope of mankind."
 
 [node name="FamilyText" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_4mciy")
 theme_override_font_sizes/font_size = 24
 text = "The Last Human Family
-Save as many as you can for extra lives"
+Gain extra lives by saving as many as you can."
 
 [node name="GruntText" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_4mciy")
 theme_override_font_sizes/font_size = 24
 text = "The force of Ground Roving Unit Network Terminators
-(GRUNT) Godotrons seek to destroy you"
+(GRUNT) Godotrons seek to destroy you."
 
 [node name="HulkText" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_4mciy")
 theme_override_font_sizes/font_size = 24
 text = "The Hulk Godotrons seek out and eliminate the
-the last family. They cannot be destroyed"
+the last family. They cannot be destroyed."
 
 [node name="SpheroidText" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_4mciy")
 theme_override_font_sizes/font_size = 24
 text = "The Spheroids are programmed to manufacture
-Enforcer Godotrons
+Enforcer Godotrons.
 "
 
 [node name="EnforcerText" type="Label" parent="GridContainer"]
@@ -187,7 +263,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_4mciy")
 theme_override_font_sizes/font_size = 24
 text = "Enforcer Godotrons are relentless hunters and
-shooters. Beware of their speed and projectiles
+shooters. Beware of their speed and projectiles.
 "
 
 [node name="ElectrodeText" type="Label" parent="GridContainer"]
@@ -195,7 +271,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("1_4mciy")
 theme_override_font_sizes/font_size = 24
 text = "As you struggle to save humanity, be sure to avoid
-Eletrodes in your path
+Electrodes in your path.
 "
 
 [node name="Player" type="Sprite2D" parent="."]
@@ -227,7 +303,6 @@ frame = 6
 position = Vector2(697, 413)
 texture = ExtResource("9_iwu2d")
 hframes = 7
-frame = 5
 
 [node name="FamilyMenu" type="Sprite2D" parent="."]
 position = Vector2(689, 267)
