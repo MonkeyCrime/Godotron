@@ -1,0 +1,241 @@
+[gd_scene load_steps=20 format=3 uid="uid://82okgpwhfmcq"]
+
+[ext_resource type="FontFile" uid="uid://qymxbuymyue7" path="res://fonts/Computerfont.ttf" id="1_4mciy"]
+[ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_ktqko"]
+[ext_resource type="Texture2D" uid="uid://bfr60dw75aj1h" path="res://art/title_background.png" id="2_ud028"]
+[ext_resource type="Texture2D" uid="uid://bpp8hwuq3k6ge" path="res://art/title_screen.png" id="2_yisxw"]
+[ext_resource type="Texture2D" uid="uid://c0ptnwt73oqr2" path="res://art/player.png" id="5_lrcbg"]
+[ext_resource type="Texture2D" uid="uid://sx2dwe8fadu2" path="res://art/grunt.png" id="6_0bcoq"]
+[ext_resource type="Texture2D" uid="uid://cd1m4hi3fmwxj" path="res://art/hulk.png" id="7_03xk5"]
+[ext_resource type="Texture2D" uid="uid://dttfvpow8vuit" path="res://art/spheroid.png" id="8_8xufp"]
+[ext_resource type="Texture2D" uid="uid://oj8yq32vsj4u" path="res://art/enforcer.png" id="9_iwu2d"]
+[ext_resource type="Texture2D" uid="uid://nkrhveb3v8lh" path="res://art/family_menu.png" id="10_vrexd"]
+[ext_resource type="Texture2D" uid="uid://dajiqblrtmtiv" path="res://art/electrodes_ui.png" id="11_apwqd"]
+
+[sub_resource type="Theme" id="Theme_jww4v"]
+default_font = ExtResource("1_4mciy")
+
+[sub_resource type="InputEventKey" id="InputEventKey_smqu5"]
+device = -1
+keycode = 83
+unicode = 115
+
+[sub_resource type="Shortcut" id="Shortcut_1xic6"]
+events = [SubResource("InputEventKey_smqu5")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_61j0s"]
+device = -1
+keycode = 69
+unicode = 101
+
+[sub_resource type="InputEventKey" id="InputEventKey_teuuu"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_xpsvq"]
+events = [SubResource("InputEventKey_61j0s"), SubResource("InputEventKey_teuuu")]
+
+[sub_resource type="Animation" id="Animation_dlnlw"]
+resource_name = "title_cycle"
+length = 2.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Logo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2, 1.6, 2, 2.4, 2.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 0, 1), Color(0.00784314, 1, 0, 1), Color(0, 1, 1, 1), Color(0.0392157, 0, 1, 1), Color(0, 1, 1, 1), Color(1, 1, 0.0117647, 1), Color(1, 0, 0.0117647, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_crnts"]
+_data = {
+"title_cycle": SubResource("Animation_dlnlw")
+}
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ktqko")
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(1, 0.557821, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -448.5
+offset_top = -192.5
+offset_right = 448.5
+offset_bottom = 192.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ud028")
+
+[node name="Logo" type="TextureRect" parent="."]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -224.5
+offset_right = 224.5
+offset_bottom = 193.0
+grow_horizontal = 2
+texture = ExtResource("2_yisxw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -111.0
+offset_top = -153.0
+offset_right = 111.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_jww4v")
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
+shortcut = SubResource("Shortcut_1xic6")
+text = "Start"
+
+[node name="Exit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
+shortcut = SubResource("Shortcut_xpsvq")
+text = "Exit"
+
+[node name="LogoAnimator" type="AnimationPlayer" parent="."]
+autoplay = "title_cycle"
+libraries = {
+"": SubResource("AnimationLibrary_crnts")
+}
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -540.0
+offset_top = -120.0
+offset_right = 571.0
+offset_bottom = 156.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="PlayerText" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4mciy")
+theme_override_font_sizes/font_size = 24
+text = "Player
+You are the last hope of mankind"
+
+[node name="FamilyText" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4mciy")
+theme_override_font_sizes/font_size = 24
+text = "The Last Human Family
+Save as many as you can for extra lives"
+
+[node name="GruntText" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4mciy")
+theme_override_font_sizes/font_size = 24
+text = "The force of Ground Roving Unit Network Terminators
+(GRUNT) Godotrons seek to destroy you"
+
+[node name="HulkText" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4mciy")
+theme_override_font_sizes/font_size = 24
+text = "The Hulk Godotrons seek out and eliminate the
+the last family. They cannot be destroyed"
+
+[node name="SpheroidText" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4mciy")
+theme_override_font_sizes/font_size = 24
+text = "The Spheroids are programmed to manufacture
+Enforcer Godotrons
+"
+
+[node name="EnforcerText" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4mciy")
+theme_override_font_sizes/font_size = 24
+text = "Enforcer Godotrons are relentless hunters and
+shooters. Beware of their speed and projectiles
+"
+
+[node name="ElectrodeText" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4mciy")
+theme_override_font_sizes/font_size = 24
+text = "As you struggle to save humanity, be sure to avoid
+Eletrodes in your path
+"
+
+[node name="Player" type="Sprite2D" parent="."]
+position = Vector2(57, 265)
+texture = ExtResource("5_lrcbg")
+hframes = 12
+vframes = 3
+frame = 6
+
+[node name="Grunt" type="Sprite2D" parent="."]
+position = Vector2(59, 340)
+texture = ExtResource("6_0bcoq")
+hframes = 9
+vframes = 2
+
+[node name="Hulk" type="Sprite2D" parent="."]
+position = Vector2(699, 340)
+texture = ExtResource("7_03xk5")
+hframes = 12
+frame = 3
+
+[node name="Spheroid" type="Sprite2D" parent="."]
+position = Vector2(59, 413)
+texture = ExtResource("8_8xufp")
+hframes = 8
+frame = 6
+
+[node name="Enforcer" type="Sprite2D" parent="."]
+position = Vector2(697, 413)
+texture = ExtResource("9_iwu2d")
+hframes = 7
+frame = 5
+
+[node name="FamilyMenu" type="Sprite2D" parent="."]
+position = Vector2(689, 267)
+texture = ExtResource("10_vrexd")
+
+[node name="ElectrodesUi" type="Sprite2D" parent="."]
+position = Vector2(60, 489)
+texture = ExtResource("11_apwqd")
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]

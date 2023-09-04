@@ -1,0 +1,147 @@
+[gd_scene load_steps=15 format=3 uid="uid://8ylkwctr5dof"]
+
+[ext_resource type="Script" path="res://scenes/hulk/hulk.gd" id="1_6vx27"]
+[ext_resource type="Texture2D" uid="uid://cd1m4hi3fmwxj" path="res://art/hulk.png" id="2_aco8r"]
+[ext_resource type="Script" path="res://script/state_machine.gd" id="3_or8ay"]
+[ext_resource type="Script" path="res://scenes/hulk/initialising.gd" id="4_wxaae"]
+[ext_resource type="Script" path="res://scenes/hulk/active.gd" id="6_up27h"]
+[ext_resource type="Script" path="res://scenes/hulk/exit_level.gd" id="7_ig3cb"]
+[ext_resource type="Script" path="res://scenes/hulk/idle.gd" id="8_yja2e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sqkw5"]
+size = Vector2(43, 48)
+
+[sub_resource type="Animation" id="Animation_iqmsa"]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_s3m1j"]
+resource_name = "walk_down"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 5, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_20ogh"]
+resource_name = "walk_left"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 0, 2]
+}
+
+[sub_resource type="Animation" id="Animation_ysaon"]
+resource_name = "walk_right"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 6, 8]
+}
+
+[sub_resource type="Animation" id="Animation_dipdk"]
+resource_name = "walk_up"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 5, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2g7rb"]
+_data = {
+"idle": SubResource("Animation_iqmsa"),
+"walk_down": SubResource("Animation_s3m1j"),
+"walk_left": SubResource("Animation_20ogh"),
+"walk_right": SubResource("Animation_ysaon"),
+"walk_up": SubResource("Animation_dipdk")
+}
+
+[node name="Hulk" type="CharacterBody2D" groups=["Enemies"]]
+z_index = 2
+collision_mask = 62
+script = ExtResource("1_6vx27")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -2)
+shape = SubResource("RectangleShape2D_sqkw5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_aco8r")
+hframes = 12
+frame = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+autoplay = "idle"
+libraries = {
+"": SubResource("AnimationLibrary_2g7rb")
+}
+
+[node name="StateMachine" type="Node2D" parent="."]
+script = ExtResource("3_or8ay")
+initial_state = NodePath("Initialising")
+
+[node name="Initialising" type="Node2D" parent="StateMachine"]
+script = ExtResource("4_wxaae")
+
+[node name="Active" type="Node2D" parent="StateMachine"]
+script = ExtResource("6_up27h")
+
+[node name="ExitLevel" type="Node2D" parent="StateMachine"]
+script = ExtResource("7_ig3cb")
+
+[node name="Idle" type="Node2D" parent="StateMachine"]
+script = ExtResource("8_yja2e")
+
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="on_animation_finished"]

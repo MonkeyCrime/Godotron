@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8xh08p1kgqps"]
+
+[ext_resource type="Script" path="res://scenes/enforcer/bullet/enforcer_bullet.gd" id="1_xndy2"]
+[ext_resource type="Texture2D" uid="uid://dulpn3hh18y8l" path="res://art/enforcer_bullet.png" id="2_bp327"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mwvpg"]
+size = Vector2(22, 22)
+
+[sub_resource type="Animation" id="Animation_q8tqm"]
+resource_name = "active"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_equ0y"]
+_data = {
+"active": SubResource("Animation_q8tqm")
+}
+
+[node name="enforcer_bullet" type="CharacterBody2D"]
+collision_mask = 10
+script = ExtResource("1_xndy2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mwvpg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_bp327")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_equ0y")
+}
+
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]

@@ -1,0 +1,111 @@
+[gd_scene load_steps=13 format=3 uid="uid://pfs4nijfs18y"]
+
+[ext_resource type="Script" path="res://scenes/grunt/grunt.gd" id="1_xw6w3"]
+[ext_resource type="Texture2D" uid="uid://sx2dwe8fadu2" path="res://art/grunt.png" id="2_omm26"]
+[ext_resource type="Script" path="res://script/state_machine.gd" id="3_ygocq"]
+[ext_resource type="Script" path="res://scenes/grunt/initialising.gd" id="4_1wdqg"]
+[ext_resource type="Script" path="res://scenes/grunt/active.gd" id="6_73qpm"]
+[ext_resource type="Script" path="res://scenes/grunt/exit_level.gd" id="7_t4a73"]
+[ext_resource type="Script" path="res://scenes/grunt/idle.gd" id="8_0qpot"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sqkw5"]
+size = Vector2(36, 48)
+
+[sub_resource type="Animation" id="Animation_eniwy"]
+resource_name = "exit_level"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [2, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_iqmsa"]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_20ogh"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 0, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2g7rb"]
+_data = {
+"exit_level": SubResource("Animation_eniwy"),
+"idle": SubResource("Animation_iqmsa"),
+"walk": SubResource("Animation_20ogh")
+}
+
+[node name="Grunt" type="CharacterBody2D" groups=["Enemies"]]
+z_index = 1
+collision_mask = 30
+script = ExtResource("1_xw6w3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_sqkw5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_omm26")
+hframes = 9
+vframes = 2
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+autoplay = "idle"
+libraries = {
+"": SubResource("AnimationLibrary_2g7rb")
+}
+
+[node name="StateMachine" type="Node2D" parent="."]
+script = ExtResource("3_ygocq")
+initial_state = NodePath("Initialising")
+
+[node name="Initialising" type="Node2D" parent="StateMachine"]
+script = ExtResource("4_1wdqg")
+
+[node name="Active" type="Node2D" parent="StateMachine"]
+script = ExtResource("6_73qpm")
+
+[node name="ExitLevel" type="Node2D" parent="StateMachine"]
+script = ExtResource("7_t4a73")
+
+[node name="Idle" type="Node2D" parent="StateMachine"]
+script = ExtResource("8_0qpot")
+
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="on_animation_finished"]

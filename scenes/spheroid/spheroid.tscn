@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://b2kgd6nfg6pap"]
+
+[ext_resource type="Script" path="res://scenes/spheroid/spheroid.gd" id="1_7ycyf"]
+[ext_resource type="Texture2D" uid="uid://dttfvpow8vuit" path="res://art/spheroid.png" id="2_5u677"]
+[ext_resource type="Script" path="res://script/state_machine.gd" id="3_eylsu"]
+[ext_resource type="Script" path="res://scenes/spheroid/active.gd" id="4_wg6ci"]
+[ext_resource type="Script" path="res://scenes/spheroid/exit_level.gd" id="5_y4vm3"]
+[ext_resource type="Script" path="res://scenes/spheroid/idle.gd" id="6_oe6d6"]
+[ext_resource type="Script" path="res://scenes/spheroid/travelling_to_wall.gd" id="7_5s3ng"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dtjss"]
+size = Vector2(44, 45)
+
+[sub_resource type="Animation" id="Animation_hit8l"]
+resource_name = "active"
+length = 0.7
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [7, 6, 5, 4, 3, 2, 1, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6qp87"]
+_data = {
+"active": SubResource("Animation_hit8l")
+}
+
+[node name="Spheroid" type="CharacterBody2D" groups=["Enemies"]]
+collision_mask = 14
+script = ExtResource("1_7ycyf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_dtjss")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_5u677")
+hframes = 8
+frame = 7
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6qp87")
+}
+
+[node name="StateMachine" type="Node2D" parent="."]
+script = ExtResource("3_eylsu")
+initial_state = NodePath("Idle")
+
+[node name="Active" type="Node2D" parent="StateMachine"]
+script = ExtResource("4_wg6ci")
+
+[node name="ExitLevel" type="Node2D" parent="StateMachine"]
+script = ExtResource("5_y4vm3")
+
+[node name="Idle" type="Node2D" parent="StateMachine"]
+script = ExtResource("6_oe6d6")
+
+[node name="TravellingToWall" type="Node2D" parent="StateMachine"]
+script = ExtResource("7_5s3ng")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
