@@ -25,11 +25,7 @@ func initialise(init_data:Dictionary) -> void:
 	unit_size = sprite.texture.get_size()
 	unit_size.x = unit_size.x / sprite.hframes
 	unit_size.y = unit_size.y / sprite.vframes
-
-	if get_parent() != null:
-		screen_size = get_parent().get_viewport_rect().size
-		boundary_offset = get_parent().get_node("WorldBoundary/Top").position.y
-
+	
 	disable_player_collisions(false)
 	
 	state_machine.transition_to(Constants.STATENAME_IDLE, {
@@ -39,7 +35,8 @@ func initialise(init_data:Dictionary) -> void:
 	
 	
 func _ready() -> void:
-	pass
+		screen_size = get_parent().get_viewport_rect().size
+		boundary_offset = get_parent().get_node("WorldBoundary/Top").position.y
 	
 	
 func _on_tree_entered():
