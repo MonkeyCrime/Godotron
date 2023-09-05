@@ -94,6 +94,6 @@ func disable_player_collisions(state: bool) -> void:
 	
 	
 func on_disable_player_collisions(state: bool) -> void:
-	set_collision_mask_value(2, not state)
+	set_collision_mask_value(Constants.COLLISION_MASK_PLAYER, not state)
 	
 	

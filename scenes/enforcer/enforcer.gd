@@ -34,16 +34,19 @@ func _ready() -> void:
 func _on_tree_entered():
 	Events.safe_connect(Constants.EVENT_UNITS_ACTIVATED, on_units_activated)
 	Events.safe_connect(Constants.EVENT_UNITS_IDLE, on_units_idle)
+	Events.safe_connect(Constants.EVENT_PLAYER_INVULNERABLE, on_disable_player_collisions)
 	
 	
 func _on_tree_exiting():
 	Events.safe_disconnect(Constants.EVENT_UNITS_ACTIVATED, on_units_activated)
 	Events.safe_disconnect(Constants.EVENT_UNITS_IDLE, on_units_idle)
+	Events.safe_disconnect(Constants.EVENT_PLAYER_INVULNERABLE, on_disable_player_collisions)
 	
 	
 # Emitted by the level when it's gameplay-ready
 func on_units_activated() -> void:
 	disable_player_collisions(false)
+	
 	state_machine.transition_to(Constants.STATENAME_ACTIVE, {
 		"player_node" : player_node
 	} )
@@ -82,7 +85,7 @@ func disable_player_collisions(state: bool) -> void:
 	on_disable_player_collisions(state)
 	
 	
-func on_disable_player_collisions(state: bool) -> void:
-	set_collision_mask_value(2, not state)
+func on_disable_player_collisions(state : bool) -> void:
+	set_collision_mask_value(Constants.COLLISION_MASK_PLAYER, not state)
 	
 	

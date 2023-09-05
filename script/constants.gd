@@ -99,3 +99,6 @@ const STATENAME_ACTIVE: StringName = "Active"
 const STATENAME_EXITLEVEL: StringName = "ExitLevel"
 const STATENAME_ENTERLEVEL: StringName = "EnterLevel"
 const STATENAME_TRAVELLING_WALL: StringName = "TravellingToWall"
+
+const COLLISION_MASK_PLAYER: int = 2
+const COLLISION_MASK_PLAYER_SHOTS: int = 3
