@@ -326,7 +326,7 @@ offset_bottom = -6.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("1_4mciy")
-text = "v0.9"
+text = "v1.0"
 
 [node name="MovementText" type="Label" parent="."]
 layout_mode = 0
