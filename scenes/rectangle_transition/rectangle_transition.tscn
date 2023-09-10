@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dre8t61yu7bpn"]
 
-[ext_resource type="Script" path="res://rectangle_transition.gd" id="1_jkvcd"]
+[ext_resource type="Script" path="res://scenes/rectangle_transition/rectangle_transition.gd" id="1_jkvcd"]
 
 [node name="RectangleTransition" type="Node2D"]
 script = ExtResource("1_jkvcd")
