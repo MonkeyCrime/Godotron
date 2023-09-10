@@ -328,5 +328,27 @@ grow_vertical = 0
 theme_override_fonts/font = ExtResource("1_4mciy")
 text = "v0.9"
 
+[node name="MovementText" type="Label" parent="."]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 600.0
+offset_right = 428.0
+offset_bottom = 635.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("1_4mciy")
+theme_override_font_sizes/font_size = 32
+text = "Use W, A, S, D to move"
+
+[node name="ShootingText" type="Label" parent="."]
+layout_mode = 0
+offset_left = 836.0
+offset_top = 600.0
+offset_right = 1165.0
+offset_bottom = 635.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("1_4mciy")
+theme_override_font_sizes/font_size = 32
+text = "Use Arrow Keys to fire"
+
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_exit_pressed"]
