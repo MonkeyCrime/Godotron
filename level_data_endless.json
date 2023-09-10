@@ -1,20 +1,20 @@
 [
 	{"idle_time":0.25,"move_time":0.75,"num_grunts":30,
-	"num_hulks":0,
+	"num_hulks":4,
 	"num_electrodes":5,
 	"num_spheroids":2,
 	"enforcer_speed":250,
-	"num_family":7
+	"num_family":7,
 	},
 	{"idle_time":0.25,"move_time":0.85,"num_grunts":20,
-	"num_hulks":3,
+	"num_hulks":4,
 	"num_electrodes":30,
 	"num_spheroids":4,
 	"enforcer_speed":250,
-	"num_family":5
+	"num_family":5,
 	},
 	{"idle_time":0.25,"move_time":0.95,"num_grunts":20,
-	"num_hulks":30,
+	"num_hulks":20,
 	"num_electrodes":8,
 	"num_spheroids":4,
 	"enforcer_speed":250,
@@ -22,16 +22,16 @@
 	},
 	{"idle_time":0.45,"move_time":0.55,"num_grunts":20,
 	"num_hulks":4,
-	"num_electrodes":10,
+	"num_electrodes":8,
 	"num_spheroids":10,
 	"enforcer_speed":250,
 	"num_family":5
 	},
-	{"idle_time":0.35,"move_time":0.75,"num_grunts":25,
+	{"idle_time":0.35,"move_time":0.75,"num_grunts":24,
 	"num_hulks":10,
 	"num_electrodes":10,
 	"num_spheroids":10,
 	"enforcer_speed":250,
-	"num_family":20
+	"num_family":15
 	},
 ]

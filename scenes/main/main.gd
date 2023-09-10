@@ -34,7 +34,7 @@ func next_level() -> void:
 	
 	Events.emit_signal(Constants.EVENT_UNITS_SPAWNED)
 	Events.emit_signal(Constants.EVENT_UI_UPDATE_WAVE, {
-		"wave" : levelManager.level_display + 1
+		"wave" : levelManager.level_display
 	})
 	
 	
@@ -47,11 +47,6 @@ func on_game_over() -> void:
 func on_level_complete() -> void:
 	# Clean up
 	levelManager.removeAllProjectiles(self)
-	
-#	if levelManager.level == levelManager.maxLevels:
-#		await SceneTransition.fade_out()
-#		get_tree().change_scene_to_file(Constants.SCENE_MAIN_MENU)
-#		await SceneTransition.fade_in()
 	
 	
 # Emitted by the Player instance when the "enter level" animation has completed

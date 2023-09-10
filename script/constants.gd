@@ -41,6 +41,8 @@ const SCENE_SPHEROID: String = "res://scenes/spheroid/spheroid.tscn"
 const SCENE_ENFORCER: String = "res://scenes/enforcer/enforcer.tscn"
 const SCENE_ENFORCER_BULLET: String = "res://scenes/enforcer/bullet/enforcer_bullet.tscn"
 const SCENE_FAMILY: String = "res://scenes/family/family.tscn"
+const LEVEL_STARTER: String = "res://level_data.json"
+const LEVEL_ENDLESS: String = "res://level_data_endless.json"
 
 const SPAWN_MIN_DISTANCE: float = 0.4
 const SPAWN_MAX_DISTANCE: float = 0.9

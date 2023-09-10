@@ -66,10 +66,13 @@ func initialiseNextLevel(node:Node2D) -> void:
 
 	if level_display == 0:
 		# Starting the game, load the beginner level data
-		load_level_data("res://level_data.json")
+		load_level_data(Constants.LEVEL_STARTER)
 	elif level_display == 5:
 		# On wave 5, load the endless level data
-		load_level_data("res://level_data_endless.json")
+		load_level_data(Constants.LEVEL_ENDLESS)
+	
+	if level_display > 10:
+		adjust_level_difficulty()
 	
 	spawnUnits(node, Enums.UnitType.FAMILY, level_data[level_index].num_family)
 	spawnUnits(node, Enums.UnitType.HULK, level_data[level_index].num_hulks)
@@ -232,3 +235,48 @@ func on_family_rescue(_node:Node2D):
 	if family_bonus > 5000:
 		Events.emit_signal(Constants.EVENT_PLAYER_ADD_LIVES, 1 )
 		family_bonus = 1000
+	
+	
+func adjust_level_difficulty():
+	match level_index:
+		0:	# grunt wave
+			level_data[level_index].num_grunts += 4
+			limit_grunts()
+		1:	# electrode wave
+			level_data[level_index].num_electrodes += 4
+			limit_electrodes()
+		2:	# hulk wave
+			level_data[level_index].num_hulks += 4
+			limit_hulks()
+		3:	#spheroid wave
+			level_data[level_index].num_spheroids += 2
+			limit_spheroids()
+		4:	# smash wave
+			level_data[level_index].num_grunts += 4
+			level_data[level_index].num_electrodes += 4
+			level_data[level_index].num_hulks += 4
+			level_data[level_index].num_spheroids += 2
+			limit_grunts()
+			limit_electrodes()
+			limit_hulks()
+			limit_spheroids()
+	
+	
+func limit_grunts():
+	if level_data[level_index].num_grunts > Constants.SPAWN_MAX_GRUNTS:
+		level_data[level_index].num_grunts = Constants.SPAWN_MAX_GRUNTS
+	
+	
+func limit_electrodes():
+	if level_data[level_index].num_electrodes > Constants.SPAWN_MAX_ELECTRODES:
+		level_data[level_index].num_electrodes = Constants.SPAWN_MAX_ELECTRODES
+	
+	
+func limit_hulks():
+	if level_data[level_index].num_hulks > Constants.SPAWN_MAX_HULKS:
+		level_data[level_index].num_hulks = Constants.SPAWN_MAX_HULKS
+	
+	
+func limit_spheroids():
+	if level_data[level_index].num_spheroids > Constants.SPAWN_MAX_SPHEROIDS:
+		level_data[level_index].num_spheroids = Constants.SPAWN_MAX_SPHEROIDS
