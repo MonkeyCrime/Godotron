@@ -77,7 +77,6 @@ script = ExtResource("1_xw6w3")
 shape = SubResource("RectangleShape2D_sqkw5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
 texture = ExtResource("2_omm26")
 hframes = 9
 vframes = 2

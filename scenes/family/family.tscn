@@ -556,7 +556,6 @@ shape = SubResource("RectangleShape2D_sqkw5")
 one_shot = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
 texture = ExtResource("2_vysjr")
 hframes = 12
 vframes = 4
