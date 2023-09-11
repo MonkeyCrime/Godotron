@@ -12,7 +12,7 @@ I've tried to capture the feel of the game without being a perfectionist in ever
 - The difficulty model is my own interpretation and in no way reflects that of the original game.
 
 I've tried to follow Godot best practice; there are many areas that highlight my inexperience with the engine (hey, it's my first time with Godot):
-- AnimatedSprite2D - I should have used this instead of using Sprite2D and AnimationPlayer.
+- AnimationTrees - I should have used this instead of using Sprite2D and AnimationPlayer.
 - Collision detection - I'm not happy with the mixture of disabling CollisionShape2D and CollisionLayers. It shows an incomplete understanding of both systems.
 - UI - A lot of learning to do here.
 
